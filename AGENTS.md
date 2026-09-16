@@ -22,7 +22,7 @@ Welcome to **AgentVerge**. As an autonomous or assisted coding agent contributin
      * **Runtime monitoring** (telemetry / traces)
    * Keep each in its designated package.
 4. **Strong Typing & Pydantic Models**:
-   * All code must be strictly typed using Python 3.10+ type hints (`X | Y`, `list[T]`, etc.).
+   * All code must be strictly typed using Python 3.12+ type hints (`X | Y`, `list[T]`, etc.).
    * Use Pydantic v2 (`pydantic>=2.0`) for domain models, validation schemas, and configuration models.
    * Domain models representing findings, evaluations, and reports should prefer `frozen=True` where immutability is desired.
 5. **Dependency Injection**:

@@ -16,7 +16,7 @@ graph TD
     Discovery --> Context[ProjectContext]
     Config --> ConfigModel[AgentVergeConfig]
     
-    CLI --> Engine[VerificationEngine: agentverge.engine]
+    CLI --> Engine[VerificationEngine: agentverge.core]
     
     subgraph Core Engine [agentverge.core]
         Engine --> Registry[Scanner & Evaluator Registry]
@@ -150,19 +150,19 @@ Responsible for locating candidate files and agent contexts:
 
 ### 4.3 Scanner Subsystem (`agentverge.scanners`)
 * Scanners implement the `Scanner` protocol.
-* Built-in MVP scanners:
-  * `SecretScanner`: High-entropy string and known token format detection (API keys, private keys).
-  * `DangerousExecutionScanner`: AST-based detection of dangerous Python invocations (`eval`, `exec`, `subprocess.run(..., shell=True)`).
-  * `PathTraversalScanner`: Insecure file operations accepting unvalidated dynamic paths.
+* Core scanners:
+  * `SecretScanner` *(Implemented in v0.1.0)*: High-entropy string and known token format detection (API keys, private keys).
+  * `DangerousExecutionScanner` *(Planned v0.2.0)*: AST-based detection of dangerous Python invocations (`eval`, `exec`, `subprocess.run(..., shell=True)`).
+  * `PathTraversalScanner` *(Planned v0.2.0)*: Insecure file operations accepting unvalidated dynamic paths.
 
 ### 4.4 Evaluation Engine (`agentverge.eval`)
-* Evaluators implement the `Evaluator` protocol.
-* Built-in MVP evaluators:
+* Evaluators implement the `Evaluator` protocol *(Planned for v0.2.0+)*.
+* Planned evaluators:
   * `FileExistenceEvaluator`: Verifies required artifacts exist.
   * `ContentAssertionEvaluator`: Deterministic assertions on generated outputs (regex match, JSON schema validity).
   * `DiffBoundaryEvaluator`: Ensures the agent did not touch files outside its declared permission boundary.
 
-### 4.5 Scoring & Quality Gate Engine (`agentverge.engine`)
+### 4.5 Scoring & Quality Gate Engine (`agentverge.core`)
 * Aggregates findings and evaluation results.
 * Calculates a normalized 0–100 security/quality score using weighted severity deduction.
 * Applies policy gates (e.g., `fail_on: ["high", "critical"]`).

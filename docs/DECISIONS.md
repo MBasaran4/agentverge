@@ -1,12 +1,12 @@
 # AgentVerge Architectural Decision Records (ADRs)
 
-## ADR-001: Language Choice — Python 3.10+ with Modern Static Typing
+## ADR-001: Language Choice — Python 3.12+ with Modern Static Typing
 
 ### Context
 AgentVerge targets AI engineers, agent framework developers, and Python-heavy AI ecosystems (LangChain, AutoGen, CrewAI, LlamaIndex). A lightweight, fast, and familiar language is required for both contributors and end-user adoption.
 
 ### Decision
-We choose **Python >= 3.10** with full static type annotations (`mypy` / `pyright` strictness). We use modern union syntax (`X | Y`), structural pattern matching where suitable, and avoid legacy compatibility hacks.
+We choose **Python >= 3.12** with full static type annotations (`mypy` / `pyright` strictness). We use modern union syntax (`X | Y`), structural pattern matching where suitable, and avoid legacy compatibility hacks.
 
 ### Consequences
 * **Positive**: High contributor adoption, direct native parsing of Python ASTs via the standard library `ast` module, rich ecosystem of test tools.
@@ -96,10 +96,15 @@ Use Python's standard `typing.Protocol` with `@runtime_checkable` to define `Sca
 Bloated dependencies lead to version conflicts, slow installations, and security vulnerabilities.
 
 ### Decision
-For the MVP, dependencies are kept strictly to:
-* `pydantic>=2.0` (Domain models & config)
-* `tomli` / `tomllib` (TOML configuration loading)
-* `click` or `typer` (CLI parsing)
-* `pytest` (Testing - dev only)
+For the MVP, runtime dependencies are kept strictly to:
+* `pydantic>=2.0` (Domain models & config schemas)
+* `typer>=0.12.0` (CLI parsing & execution)
+* `rich>=13.0.0` (Terminal diagnostic rendering)
+* `pyyaml>=6.0.1` (YAML configuration loading)
+
+And dev dependencies strictly to:
+* `pytest>=8.0.0` (Deterministic test runner)
+* `ruff>=0.3.0` (Linting and formatting)
+* `mypy>=1.9.0` (Static type checking)
 
 No cloud SDKs, no databases, no heavy web frameworks.

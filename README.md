@@ -3,6 +3,7 @@
 **The verification layer for AI agents.**
 
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
+[![CI](https://github.com/MBasaran4/agentverge/actions/workflows/ci.yml/badge.svg)](https://github.com/MBasaran4/agentverge/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 AgentVerge is an open-source, local-first verification and safety tool designed to audit, validate, and constrain AI agent outputs and repositories with 100% deterministic checks.
@@ -228,7 +229,7 @@ ruff format --check .
 
 ## Roadmap
 
-AgentVerge is developed around four foundational verification pillars. See [docs/ROADMAP.md](docs/ROADMAP.md) for complete milestone planning:
+AgentVerge is developed around four foundational verification pillars. See [docs/ROADMAP.md](docs/ROADMAP.md) and [docs/BACKLOG.md](docs/BACKLOG.md) for complete milestone planning and release tracking:
 
 | Pillar | Focus Area | Status |
 | :--- | :--- | :--- |
@@ -236,6 +237,25 @@ AgentVerge is developed around four foundational verification pillars. See [docs
 | **Pillar 2: Behavior Evaluation** | Output assertions, file diff boundaries, schema verification | Planned (v0.2.0) |
 | **Pillar 3: Tool-Use Safety** | MCP tool schema validation, pre-execution command checking | Planned (v0.3.0) |
 | **Pillar 4: CI & Ecosystem** | SARIF 2.1.0 output, GitHub Action integration, PR annotations | Planned (v0.4.0) |
+
+---
+
+## Contributing
+
+We welcome contributions! Please review [AGENTS.md](AGENTS.md) for architectural guidelines, coding standards, and developer rules.
+
+### Development Workflow
+
+1. Fork the repository and create a feature branch (`git checkout -b feat/my-feature`).
+2. Implement your changes adhering to strict typing (`mypy src tests`).
+3. Ensure all tests and linters pass:
+   ```bash
+   pytest
+   ruff check .
+   ruff format --check .
+   mypy src tests
+   ```
+4. Submit a Pull Request targeting `main`.
 
 ---
 

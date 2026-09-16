@@ -12,34 +12,34 @@
 ## Phase 1: MVP - Core CLI & Deterministic Engine
 **Target**: Compact, standalone, zero-paid-API local CLI verification tool.
 
-* **1.1 Project Discovery & Context**:
-  * Implement directory walker with `.gitignore` and pattern support (`fnmatch`).
-  * Discovers source files, agent configuration files, and project diffs.
-  * Build immutable `ProjectContext`.
-* **1.2 Configuration Subsystem**:
-  * Implement `AgentVergeConfig` loader supporting `agentverge.toml` and `pyproject.toml`.
+* **1.1 Project Discovery & Context** `[x] Implemented in v0.1.0`:
+  * Directory walker with `.gitignore` and pattern exclusion support.
+  * Discovers source files, AI agent instructions (`AGENTS.md`, `CLAUDE.md`, `.cursorrules`), and MCP configs.
+  * Builds immutable `ProjectContext`.
+* **1.2 Configuration Subsystem** `[x] Implemented in v0.1.0`:
+  * `AgentVergeConfig` loader supporting `pyproject.toml` and `.agentverge.yml` / `.agentverge.yaml`.
   * Sensible zero-config defaults (scans current working directory).
-* **1.3 Core Domain Models**:
-  * Pydantic v2 models: `Severity`, `SourceLocation`, `Finding`, `EvaluationStatus`, `EvaluationResult`, `VerificationReport`.
+* **1.3 Core Domain Models** `[x] Implemented in v0.1.0`:
+  * Pydantic v2 models: `Severity`, `Finding`, `EvaluationStatus`, `EvaluationResult`, `ScanResult`, `VerificationReport`.
 * **1.4 Baseline Security Scanners (Static)**:
-  * `SecretScanner`: High-entropy string detection and token formats (AWS keys, GitHub tokens, OpenAI keys, generic secrets).
-  * `DangerousExecutionScanner`: AST-based detection of unvalidated `eval`, `exec`, `subprocess.run(shell=True)`.
-  * `UnsafeFileOpsScanner`: Path traversal and arbitrary write detection.
-* **1.5 Baseline Deterministic Evaluator**:
-  * `FileExistenceEvaluator`: Assert generation of mandatory files.
-  * `ContentAssertionEvaluator`: Regex / JSON schema verification of agent output artifacts.
-  * `DiffBoundaryEvaluator`: Ensure agent edits do not escape authorized subdirectories.
+  * [x] `SecretScanner` *(v0.1.0)*: High-confidence token format and pattern detection (AWS keys, GitHub tokens, private keys, generic credentials, `.env` file secrets) with strict masking.
+  * [ ] `DangerousExecutionScanner` *(Planned v0.2.0)*: AST-based detection of unvalidated `eval`, `exec`, `subprocess.run(shell=True)`.
+  * [ ] `UnsafeFileOpsScanner` *(Planned v0.2.0)*: Path traversal and arbitrary write detection.
+* **1.5 Baseline Deterministic Evaluator** *(Planned v0.2.0)*:
+  * [ ] `FileExistenceEvaluator`: Assert generation of mandatory files.
+  * [ ] `ContentAssertionEvaluator`: Regex / JSON schema verification of agent output artifacts.
+  * [ ] `DiffBoundaryEvaluator`: Ensure agent edits do not escape authorized subdirectories.
 * **1.6 Scoring & Policy Engine**:
-  * Weighted risk score calculation (0–100 score).
-  * Gate validation based on configurable severity thresholds (`fail_on`).
+  * [x] Policy threshold validation (`fail_on = ["high", "critical"]`) *(v0.1.0)*.
+  * [ ] Weighted risk score calculation (0–100 score) *(Planned v0.2.0)*.
 * **1.7 Reporting**:
-  * `TerminalReporter`: Clean CLI formatting with color coding and actionable remediation.
-  * `JsonReporter`: Deterministic JSON output for CI parsing.
+  * [x] Rich terminal diagnostic output with color coding and remediation advice *(v0.1.0)*.
+  * [ ] `JsonReporter` & SARIF output for CI parsing *(Planned v0.2.0)*.
 * **1.8 CLI Commands**:
-  * `agentverge scan [path]`: Run security scanners on codebase or agent diffs.
-  * `agentverge check [path]`: Run full verification (scanners + behavioral evaluations).
-  * `agentverge init`: Generate sample `agentverge.toml` configuration.
-* **1.9 Test Suite**:
+  * [x] `agentverge scan [path]`: Run security scanners on codebase or target directories *(v0.1.0)*.
+  * [x] `agentverge check [path]`: Inspect project layout and discovered AI context *(v0.1.0)*.
+  * [ ] `agentverge init`: Generate sample `agentverge.yml` configuration *(Planned v0.2.0)*.
+* **1.9 Test Suite** `[x] Implemented in v0.1.0`:
   * 100% deterministic unit and integration test coverage using `pytest`.
 
 ---
